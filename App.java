@@ -95,6 +95,21 @@ public class App {
                 System.out.println(e);
             }
     }
+    
+    public void sign(String phone, String password) {
+        Connection con = null;
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            Class.forName("org.postgresql.Driver");
+            con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "1234");
+            st = con.prepareStatement("update customers set ticket = " + getId() + " where phone like '%" + phone + "%' AND password like '%" + password + "%'");
+            st.executeUpdate();
+            System.out.println("Successfully added");
+        } catch (Exception e){
+            System.out.println(e);
+        }
+    }
 
     public void display(String phone, String password) { //this method needs for display customers data and his ticket id
         Connection con = null;
