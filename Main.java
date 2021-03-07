@@ -9,7 +9,7 @@ public class Main {
             PreparedStatement st = con.prepareStatement("select * from ticket");
             ResultSet rs = st.executeQuery();
             while (rs.next()) // there code print all flights
-                System.out.println(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(4) + " " + rs.getString(3));
+                System.out.println(rs.getString(5) + " " + rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(4) + " " + rs.getString(3));
         } catch (Exception e){
             System.out.println(e);
         }
@@ -33,6 +33,10 @@ public class Main {
                 String date = cin.next();
                 App app = new App();
                 app.printFlight(start, finish, date); // if it's available code prints it
+                if(app.getId()==0) {
+                    System.out.println("There no train to this flight!");
+                    return;
+                }
                 System.out.println("Would you buy ticket?\n"+"1.Yes\t 2.No");
                 int buy = cin.nextInt();
                 Ticket ticket = new Ticket();
@@ -50,6 +54,15 @@ public class Main {
                     }else
                         System.out.println("Error 404");
                     System.out.println("Total cost: "+ ticket.getPrice());
+                    System.out.println("1.Sign in\t 2.Registration");
+                    int b = cin.nextInt();
+                    if(b==1) {
+                        System.out.print("Enter your phone: ");
+                        String phone = cin.next();
+                        System.out.print("Enter your password: ");
+                        String password = cin.next();
+                        app.sign(phone, password);
+                    } else if(b==2)
                     app.register(ticket.getPrice()); //there customer enter his data
                     System.out.println("Would you look another flight?\n 1.Yes\t 2.No"); //there customer can buy another flight
                     int a = cin.nextInt();
@@ -102,3 +115,4 @@ public class Main {
 
     }
 }
+
